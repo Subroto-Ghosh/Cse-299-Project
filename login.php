@@ -140,7 +140,7 @@ $conn->close();
       </button>
     </div>
     <div class="text-center">
-      <a href="Forgotten_password.php" class="text-blue-600 hover:underline">
+      <a href="./google-verification/sendotp.php" class="text-blue-600 hover:underline">
         Forgotten password?
       </a>
     </div>
