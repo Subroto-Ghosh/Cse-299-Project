@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle file upload
     $profilePic = "";
     if (isset($_FILES["profile_pic"]) && $_FILES["profile_pic"]["error"] == 0) {
-        $uploadDir = "C:/xampp/htdocs/cse311/images/"; // Ensure this folder exists
+        $uploadDir = "C:/xampp/htdocs/cse299/images/"; 
         $fileName = basename($_FILES["profile_pic"]["name"]);
         $targetPath = $uploadDir . $fileName;
 
@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (in_array($fileType, $allowedTypes)) {
             if (move_uploaded_file($_FILES["profile_pic"]["tmp_name"], $targetPath)) {
-                $profilePic = "images/" . $fileName; // Save relative path
+                $profilePic = "images/" . $fileName; 
             } else {
                 $errors[] = "Failed to upload profile picture.";
             }
