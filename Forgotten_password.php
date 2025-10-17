@@ -1,4 +1,17 @@
 <?php
+// Include or create the database connection
+$servername = "localhost";
+$username = "root"; // change if different
+$password = ""; // change if different
+$dbname = "skillprodb"; // your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
@@ -9,10 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $confirm_password) {
         $message = "Passwords do not match!";
     } elseif (strlen($password) < 8) {
-        // Check if the password is at least 8 characters long
         $message = "Password must be at least 8 characters!";
     } else {
-        // Check if the user exists and is either a student or instructor
+        // Check if the user exists
         $query = "SELECT role FROM User WHERE email = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $email);
@@ -26,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($user['role'] === 'admin') {
                 $message = "Admins cannot reset their password via this method!";
             } else {
-                // Update the user's password
+                // Update password
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
                 $update_query = "UPDATE User SET password = ? WHERE email = ?";
                 $update_stmt = $conn->prepare($update_query);
